@@ -24,7 +24,11 @@ $receipt = $validator->load($_POST["receiptXML"]);
 
 # Validator#load method
 
-There is only one method called `load` in the `Validator` class. This method takes only one argument - receipt XML string and returns [Receipt](#receipt).
+Validation is run by calling `load` method on the `Validator` class instance. This method takes only one argument - receipt XML string and returns [Receipt](#receipt).
+
+# Validator#setPublicKey method
+
+If you want to set public key directly you need to pass the public key string to this method.
 
 <a id="receipt"></a>
 ## Receipt object format
@@ -35,6 +39,7 @@ There is only one method called `load` in the `Validator` class. This method tak
 | deviceId       |
 | [productReceipt](#product-receipt) |
 | [appReceipt](#app-receipt)     |
+| publicKey     |
 | xmlDoc ([DOMDocument](http://php.net/manual/class.domdocument.php) created from XML string) |
 
 <a id="product-receipt"></a>

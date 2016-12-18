@@ -24,6 +24,7 @@ class Receipt {
   public $deviceId;
   public $productReceipt = null;
   public $appReceipt = null;
+  public $publicKey;
 
   public $xmlDoc;
 }

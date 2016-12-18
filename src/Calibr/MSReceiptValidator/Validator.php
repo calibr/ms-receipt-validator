@@ -7,8 +7,16 @@ use RobRichards\XMLSecLibs\XMLSecEnc;
 
 class Validator {
   public $sslVerifyPeer = true;
+  private $publicKey;
+
+  public function setPublicKey($key) {
+    $this->publicKey = $key;
+  }
 
   private function fetchPublicKey($certificateId) {
+    if($this->publicKey) {
+      return $this->publicKey;
+    }
     $ch = curl_init("https://lic.apps.microsoft.com/licensing/certificateserver/?cid=$certificateId");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     if(!$this->sslVerifyPeer) {
@@ -63,6 +71,7 @@ class Validator {
 
     // fill in receipt fields
     $receipt = new Receipt();
+    $receipt->publicKey = $publicKey;
     $receiptElem = $doc->getElementsByTagName("Receipt")->item(0);
     $receipt->date = $receiptElem->getAttribute("ReceiptDate");
     $receipt->deviceId = $receiptElem->getAttribute("ReceiptDeviceId");
