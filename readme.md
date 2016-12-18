@@ -17,14 +17,14 @@ use Calibr\MSReceiptValidator\Validator;
 
 $validator = new Validator();
 // validation(omit exception handling)
-$receipt = $validator->validate($_POST["receiptXML"]);
+$receipt = $validator->load($_POST["receiptXML"]);
 
 // if we are here receipt has been successfully validated and we have all receipt data in the $receipt variable
 ```
 
-# Validator#validate method
+# Validator#load method
 
-There is only one method called `validate` in the `Validator` class. This method takes only one argument - receipt XML string and returns [Receipt](#receipt).
+There is only one method called `load` in the `Validator` class. This method takes only one argument - receipt XML string and returns [Receipt](#receipt).
 
 <a id="receipt"></a>
 ## Receipt object format
@@ -62,7 +62,7 @@ There is only one method called `validate` in the `Validator` class. This method
 
 # Error handling
 
-`Validator#validate` method throws an exception if an error occurs. Possible exceptions:
+`Validator#load` method throws an exception if an error occurs. Possible exceptions:
 
 - `Calibr\MSReceiptValidator\FailFetchPublicKeyException` - Microsoft server didn't respond or respond with an error, see details in the exception message
 - `Calibr\MSReceiptValidator\MalformedReceiptException` - Receipt is invalid, see details in the exception message
