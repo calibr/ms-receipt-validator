@@ -22,11 +22,11 @@ $receipt = $validator->validate($_POST["receiptXML"]);
 // if we are here receipt has been successfully validated and we have all receipt data in the $receipt variable
 ```
 
-# Validator#validate methor
+# Validator#validate method
 
 There is only one method called `validate` in the `Validator` class. This method takes only one argument - receipt XML string and returns [Receipt](#receipt).
 
-<a id="#receipt"></a>
+<a id="receipt"></a>
 ## Receipt object format
 
 | Field          |
@@ -37,7 +37,7 @@ There is only one method called `validate` in the `Validator` class. This method
 | [appReceipt](#app-receipt)     |
 | xmlDoc         |
 
-<a id="#product-receipt"></a>
+<a id="product-receipt"></a>
 ## Product receipt object format
 
 | Field          |
@@ -51,7 +51,7 @@ There is only one method called `validate` in the `Validator` class. This method
 | expirationDate         |
 
 ## App receipt object format
-<a id="#app-receipt"></a>
+<a id="app-receipt"></a>
 
 | Field          |
 |----------------|
