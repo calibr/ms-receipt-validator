@@ -35,7 +35,7 @@ There is only one method called `validate` in the `Validator` class. This method
 | deviceId       |
 | [productReceipt](#product-receipt) |
 | [appReceipt](#app-receipt)     |
-| xmlDoc         |
+| xmlDoc ([DOMDocument](http://php.net/manual/class.domdocument.php) created from XML string) |
 
 <a id="product-receipt"></a>
 ## Product receipt object format
