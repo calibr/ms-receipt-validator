@@ -75,7 +75,9 @@ class Validator {
 
     // fill in receipt fields
     $receipt = new Receipt();
-    $receipt->publicKey = $publicKey;
+    if(isset($publicKey)) {
+      $receipt->publicKey = $publicKey;
+    }
     $receiptElem = $doc->getElementsByTagName("Receipt")->item(0);
     $receipt->date = $receiptElem->getAttribute("ReceiptDate");
     $receipt->deviceId = $receiptElem->getAttribute("ReceiptDeviceId");
