@@ -7,6 +7,8 @@ use RobRichards\XMLSecLibs\XMLSecEnc;
 
 class Validator {
   public $sslVerifyPeer = true;
+  // only for test purposes
+  public $skipValidation = false;
   private $publicKey;
 
   public function setPublicKey($key) {
@@ -42,31 +44,33 @@ class Validator {
 
     $doc->loadXML($receiptString);
 
-    $receipt = $doc->getElementsByTagName('Receipt')->item(0);
-    if(!$receipt) {
-      throw new MalformedReceiptException("Couldn't find Receipt element");
-    }
-    $certificateId = $receipt->getAttribute('CertificateId');
-    if(!$certificateId) {
-      throw new MalformedReceiptException("Couldn't find certificateId");
-    }
-    $publicKey = $this->fetchPublicKey($certificateId);
-    $objXMLSecDSig = new XMLSecurityDSig();
-    $objDSig = $objXMLSecDSig->locateSignature($doc);
-    if(!$objDSig) {
-      throw new MalformedReceiptException("Couldn't locate signature");
-    }
-    $objXMLSecDSig->canonicalizeSignedInfo();
-    if(!$objXMLSecDSig->validateReference()) {
-      throw new MalformedReceiptException("Fail to validate reference");
-    }
-    $objKey = $objXMLSecDSig->locateKey();
-    if(!$objKey) {
-      throw new MalformedReceiptException("Fail to locate key");
-    }
-    $objKey->loadKey($publicKey);
-    if(!$objXMLSecDSig->verify($objKey)) {
-      throw new ValidationFailedException("Fail to verify signature");
+    if(!$this->skipValidation) {
+      $receipt = $doc->getElementsByTagName('Receipt')->item(0);
+      if(!$receipt) {
+        throw new MalformedReceiptException("Couldn't find Receipt element");
+      }
+      $certificateId = $receipt->getAttribute('CertificateId');
+      if(!$certificateId) {
+        throw new MalformedReceiptException("Couldn't find certificateId");
+      }
+      $publicKey = $this->fetchPublicKey($certificateId);
+      $objXMLSecDSig = new XMLSecurityDSig();
+      $objDSig = $objXMLSecDSig->locateSignature($doc);
+      if(!$objDSig) {
+        throw new MalformedReceiptException("Couldn't locate signature");
+      }
+      $objXMLSecDSig->canonicalizeSignedInfo();
+      if(!$objXMLSecDSig->validateReference()) {
+        throw new MalformedReceiptException("Fail to validate reference");
+      }
+      $objKey = $objXMLSecDSig->locateKey();
+      if(!$objKey) {
+        throw new MalformedReceiptException("Fail to locate key");
+      }
+      $objKey->loadKey($publicKey);
+      if(!$objXMLSecDSig->verify($objKey)) {
+        throw new ValidationFailedException("Fail to verify signature");
+      }
     }
 
     // fill in receipt fields
